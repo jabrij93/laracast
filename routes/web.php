@@ -24,7 +24,7 @@ Route::get('/', function () {
         'posts' => Post::latest()->get(),
         'categories' => Category::all()
     ]);
-});
+})->name('home');
 
 // below is the initial code. the code causes repetitive request. so if we have 50 blog post, it will fetch 50 times in the SQL to perform the task. 
 // return view('posts', [
@@ -48,7 +48,7 @@ Route::get('categories/{category:slug}', function (Category $category) {
         'currentCategory' => $category,
         'categories' => Category::all()
     ]);
-});
+})->name('category');
 
 Route::get('authors/{author:username}', function (User $author) {
     return view('posts', [
