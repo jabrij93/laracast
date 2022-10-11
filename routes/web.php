@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PostController;
 use App\Models\Post;
 use App\Models\User;
 use App\Models\Category;
@@ -19,12 +20,7 @@ use Spatie\YamlFrontMatter\YamlFrontMatter;
 |
 */
 
-Route::get('/', function () {
-    return view('posts', [
-        'posts' => Post::latest()->get(),
-        'categories' => Category::all()
-    ]);
-})->name('home');
+Route::get('/', [PostController::class, 'index'])->name('home');
 
 // below is the initial code. the code causes repetitive request. so if we have 50 blog post, it will fetch 50 times in the SQL to perform the task. 
 // return view('posts', [
@@ -36,11 +32,7 @@ Route::get('/', function () {
 // });
 
 
-Route::get('posts/{post:slug}', function (Post $post) { // Route model binding
-    return view('post', [
-        'post' => $post
-    ]);
-});
+Route::get('posts/{post:slug}', [PostController::class, 'show']);
 
 Route::get('categories/{category:slug}', function (Category $category) {
     return view('posts', [
